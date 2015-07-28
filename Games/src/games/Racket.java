@@ -31,20 +31,19 @@ public class Racket {
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		//vx = 0;
-		//vy = 0;
+		vx = 0;
+		vy = 0;
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-			vx = vx + -speed;
+			vx = -speed;
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-			vx = vx  + speed;
+			vx = speed;
 		if (e.getKeyCode() == KeyEvent.VK_UP)
-			vy = vy
-			+ -speed;
+			vy = -speed;
 		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-			vy = vy + speed;
+			vy = speed;
 	}
 	
 	public Rectangle getBounds() {

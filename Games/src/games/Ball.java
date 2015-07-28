@@ -17,25 +17,25 @@ public class Ball {
 	}
 	void move(){
 		if (x + vx < 0)
-			vx = -(vx);
+			vx = speed;
 		if(x + vx > game.getWidth() - DIAMETER)
-			vx = -(vx);
+			vx = -speed;
 		if(y + vy < 0)
-			vy = -(vy);
+			vy = speed;
 		if (y + vy > game.getHeight() - DIAMETER)
 			game.gameOver();
-			vy = vy - vy;
 		if (collision()){
-			if (y + vy > game.racket.getTopY() - DIAMETER) {
-				vy = game.racket.vy - vy;
+			/*if (y + vy > game.racket.getTopY() - DIAMETER) {
+				vy = game.racket.vy + -vy;
 				y = game.racket.getTopY() - DIAMETER;
 			}
 			if (y + vy > game.racket.getBottomY()) {
-				vy = game.racket.vy + vy;
-				y = game.racket.getBottomY() + DIAMETER;
-			}
-			
-			vx = game.racket.vx + vx;
+				//vy = game.racket.vy + vy;
+				//y = game.racket.getBottomY() + DIAMETER;
+			} not quite ready to implement it getting hit on the bottom :/ */
+			vy = game.racket.vy + -vy;
+			y = game.racket.getTopY() - DIAMETER;
+			vx = game.racket.vx + -vx;
 			
 		}
 		
