@@ -8,15 +8,20 @@ public class Ball {
 	int x = 0;
 	int y = 0;
 	int speed = 2;
-	int vx = 1;
+	int vx = 0;
 	int vy = speed;
 	int hits = 0;
-	private Game game;
+	boolean lost = false;
+	private DualGame game;
 	
-	public Ball(Game game) {
+	public Ball(DualGame game, int x, int y, int vx, int vy) {
 		this.game = game;
+		this.x = x;
+		this.y = y;
+		this.vx = vx;
+		this.vy = vy;
 	}
-	void move(){
+	void move() {
 		if (x + vx < 0)
 			vx = -vx;
 		if(x + vx > game.getWidth() - DIAMETER)
@@ -24,7 +29,7 @@ public class Ball {
 		if(y + vy < 0)
 			vy = -vy;
 		if (y + vy > game.getHeight() - DIAMETER)
-			game.gameOver();
+			lost = true;
 		if (collision()){
 			/*if (y + vy > game.racket.getTopY() - DIAMETER) {
 				vy = game.racket.vy + -vy;
@@ -37,17 +42,19 @@ public class Ball {
 			vy = game.racket.vy + -vy;
 			y = game.racket.getTopY() - DIAMETER;
 			vx = game.racket.vx + vx;
-			hits++;
 			
+			hits++;
 		}
+
 		
 		x = x + vx;
 		y = y + vy;
 	}
 	
-	private boolean collision() {
+	public boolean collision() {
 		return game.racket.getBounds().intersects(getBounds());
 	}
+
 	
 	public void paint(Graphics2D g){
 		g.fillOval(x, y, DIAMETER, DIAMETER);

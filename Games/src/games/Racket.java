@@ -12,10 +12,10 @@ public class Racket {
 	int vx = 0;
 	int y = 400;
 	int vy = 0;
-	int speed = 4;
-	private Game game;
+	int speed = 6;
+	private DualGame game;
 	
-	public Racket(Game game) {
+	public Racket(DualGame game) {
 		this.game = game;
 	}
 	
