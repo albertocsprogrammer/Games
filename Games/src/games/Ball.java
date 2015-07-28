@@ -5,11 +5,11 @@ import java.awt.Rectangle;
 
 public class Ball {
 	private static final int DIAMETER = 20;
-	int x = 150;
-	int y = 300;
+	int x = 0;
+	int y = 0;
 	int speed = 2;
-	int vx = 0;
-	int vy = -speed;
+	int vx = 1;
+	int vy = speed;
 	private Game game;
 	
 	public Ball(Game game) {
@@ -35,7 +35,7 @@ public class Ball {
 			} not quite ready to implement it getting hit on the bottom :/ */
 			vy = game.racket.vy + -vy;
 			y = game.racket.getTopY() - DIAMETER;
-			vx = game.racket.vx + -vx;
+			vx = game.racket.vx + vx;
 			
 		}
 		

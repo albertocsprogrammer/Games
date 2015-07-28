@@ -8,9 +8,9 @@ public class Racket {
 	private static final int WIDTH = 60;
 	private static final int HEIGHT = 10;
 	
-	int x = 100;
+	int x = 150;
 	int vx = 0;
-	int y = 150;
+	int y = 400;
 	int vy = 0;
 	int speed = 4;
 	private Game game;
