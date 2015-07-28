@@ -12,9 +12,10 @@ public class Ball {
 	int vy = speed;
 	int hits = 0;
 	boolean lost = false;
-	private DualGame game;
+	boolean exists;
+	private Game game;
 	
-	public Ball(DualGame game, int x, int y, int vx, int vy) {
+	public Ball(Game game, int x, int y, int vx, int vy) {
 		this.game = game;
 		this.x = x;
 		this.y = y;
@@ -22,33 +23,35 @@ public class Ball {
 		this.vy = vy;
 	}
 	void move() {
-		if (x + vx < 0)
-			vx = -vx;
-		if(x + vx > game.getWidth() - DIAMETER)
-			vx = -vx;
-		if(y + vy < 0)
-			vy = -vy;
-		if (y + vy > game.getHeight() - DIAMETER)
-			lost = true;
-		if (collision()){
-			/*if (y + vy > game.racket.getTopY() - DIAMETER) {
+		if (exists){
+			if (x + vx < 0)
+				vx = -vx;
+			if(x + vx > game.getWidth() - DIAMETER)
+				vx = -vx;
+			if(y + vy < 0)
+				vy = -vy;
+			if (y + vy > game.getHeight() - DIAMETER)
+				lost = true;
+			if (collision()){
+				/*if (y + vy > game.racket.getTopY() - DIAMETER) {
+					vy = game.racket.vy + -vy;
+					y = game.racket.getTopY() - DIAMETER;
+				}
+				if (y + vy > game.racket.getBottomY()) {
+					//vy = game.racket.vy + vy;
+					//y = game.racket.getBottomY() + DIAMETER;
+				} not quite ready to implement it getting hit on the bottom :/ */
 				vy = game.racket.vy + -vy;
 				y = game.racket.getTopY() - DIAMETER;
+				vx = game.racket.vx + vx;
+				
+				hits++;
 			}
-			if (y + vy > game.racket.getBottomY()) {
-				//vy = game.racket.vy + vy;
-				//y = game.racket.getBottomY() + DIAMETER;
-			} not quite ready to implement it getting hit on the bottom :/ */
-			vy = game.racket.vy + -vy;
-			y = game.racket.getTopY() - DIAMETER;
-			vx = game.racket.vx + vx;
-			
-			hits++;
-		}
 
 		
 		x = x + vx;
 		y = y + vy;
+		}
 	}
 	
 	public boolean collision() {
@@ -57,7 +60,8 @@ public class Ball {
 
 	
 	public void paint(Graphics2D g){
-		g.fillOval(x, y, DIAMETER, DIAMETER);
+		if(exists)
+			g.fillOval(x, y, DIAMETER, DIAMETER);
 	}
 	
 	public Rectangle getBounds() {
