@@ -17,11 +17,11 @@ public class Ball {
 	}
 	void move(){
 		if (x + vx < 0)
-			vx = speed;
+			vx = -vx;
 		if(x + vx > game.getWidth() - DIAMETER)
-			vx = -speed;
+			vx = -vx;
 		if(y + vy < 0)
-			vy = speed;
+			vy = -vy;
 		if (y + vy > game.getHeight() - DIAMETER)
 			game.gameOver();
 		if (collision()){
