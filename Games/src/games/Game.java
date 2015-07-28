@@ -13,7 +13,6 @@ public class Game extends JPanel{
 	public static String title = "First Game";
 	Ball ball = new Ball(this);
 	Racket racket = new Racket(this);
-	
 	public Game() {
 		addKeyListener(new KeyListener() {
 			@Override
@@ -45,10 +44,11 @@ public class Game extends JPanel{
 		g2d.setColor(Color.BLUE);
 		ball.paint(g2d);
 		racket.paint(g2d);
+		g2d.drawString("Your score: " + ball.hits, 10, 20);
 	}
 	
 	public void gameOver() {
-		JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
+		JOptionPane.showMessageDialog(this, "Game Over\n Your score was " + ball.hits + "", "Game Over", JOptionPane.YES_NO_OPTION);
 		System.exit(ABORT);
 	}
 	

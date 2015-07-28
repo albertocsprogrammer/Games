@@ -10,6 +10,7 @@ public class Ball {
 	int speed = 2;
 	int vx = 1;
 	int vy = speed;
+	int hits = 0;
 	private Game game;
 	
 	public Ball(Game game) {
@@ -36,6 +37,7 @@ public class Ball {
 			vy = game.racket.vy + -vy;
 			y = game.racket.getTopY() - DIAMETER;
 			vx = game.racket.vx + vx;
+			hits++;
 			
 		}
 		
