@@ -1,4 +1,4 @@
-package games;
+package meltedchocolate.pongclone;
 
 import javax.swing.JFrame; //JFrame
 import javax.swing.JOptionPane;

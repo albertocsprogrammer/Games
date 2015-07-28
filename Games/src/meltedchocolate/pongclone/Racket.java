@@ -1,4 +1,4 @@
-package games;
+package meltedchocolate.pongclone;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
