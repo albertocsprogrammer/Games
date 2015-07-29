@@ -10,8 +10,9 @@ import java.awt.*;
 @SuppressWarnings("serial")
 public class Game extends JPanel{
 	//Variable Declaration
-	public static String title = "Dual Balls";
+	public static String title = "Pong Clone";
 	int ballAmount = 1;
+	public boolean gamePaused = false;
 	Ball ball1 = new Ball(this, 0, 0, 1, 1);
 	Ball ball2 = new Ball(this, 100, 0, 1, 2);
 	Racket racket = new Racket(this);
@@ -19,11 +20,13 @@ public class Game extends JPanel{
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
+				
 			}
 			
 			@Override
 			public void keyReleased(KeyEvent e) {
 				racket.keyReleased(e);
+				pause(e);
 			}
 			
 			@Override
@@ -49,6 +52,10 @@ public class Game extends JPanel{
 		ball2.paint(g2d);
 		racket.paint(g2d);
 		g2d.drawString("Your score: " + (ball1.hits + ball2.hits), 10, 20);
+		if (gamePaused) {
+			g2d.setFont(new Font(g2d.getFont().getFontName(), Font.PLAIN, 30));
+			g2d.drawString("PAUSED", 180, 250);
+		}
 	}
 	
 	public void gameOver() {
@@ -65,6 +72,17 @@ public class Game extends JPanel{
 		}
 	}
 	
+	public void pause(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			if (gamePaused) {
+				gamePaused = false;
+			}
+			else if (!gamePaused) {
+				gamePaused = true;
+			}
+		}
+	}
+	
 	public Object[] selection = {"1", "2"};
 	
 	public static void main(String[] args) throws InterruptedException {
@@ -74,7 +92,11 @@ public class Game extends JPanel{
 		frame.setSize(500, 500);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
 		game.ballAmount = Integer.parseInt((String)JOptionPane.showInputDialog(null, "1 or 2 balls?", "Ball Amount", JOptionPane.QUESTION_MESSAGE, null, game.selection, "1"));
+		} catch (NumberFormatException e) {
+			System.exit(ABORT);
+		}
 		if (game.ballAmount == 1) {
 			game.ball1.exists = true;
 			game.ball2.exists = false;
@@ -86,12 +108,20 @@ public class Game extends JPanel{
 		else {
 			System.exit(ABORT);
 		}
-		
-		while (true) { //Game Loop
-			game.move();
-			game.repaint();
-			game.gameOver();
-			Thread.sleep(10);
-		}
+			while (true) { //Game Loop
+				if (!game.gamePaused) {
+					game.move();
+					
+					game.gameOver();
+				}
+				game.repaint();
+				Thread.sleep(10);
+			}
 	}
 }
+/*
+99 little bugs in the code,
+99 little bugs.
+Take one down, patch it around,
+127 little bugs in the code.
+*/

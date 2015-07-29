@@ -20,7 +20,7 @@ public class Racket {
 	}
 	
 	public void move() {
-		if (x + vx > 0 && x + vx < game.getWidth()-WIDTH && y + vy > 0 && y + vy < game.getHeight()) {
+		if (x + vx > 0 && x + vx < game.getWidth() - WIDTH && y + vy > 0 && y + vy < game.getHeight()) {
 			x = x + vx;
 			y = y + vy;
 		}
