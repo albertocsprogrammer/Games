@@ -119,14 +119,15 @@ public class Game {
     		
     		projectile.x = this.mouseHandler.getMouseX();
     		projectile.y = this.mouseHandler.getMouseY();
+    		//TODO make blue dot (projectile) move when mouse moves
     		
     		//System.out.println("Y: " + mouseHandler.y + " X: " + mouseHandler.x);
     		//Graphics
     		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the framebuffer
     		glColor3f(1.0f, 0.0f, 0.0f);
     		block.draw(); //draw the block
-    		glColor3f(0.0f, 0.0f, 1.0f);
-    		projectile.draw();
+    		//glColor3f(0.0f, 0.0f, 1.0f); comment is to get rid of annoying dot until i fix it >:(
+    		//projectile.draw();
     		
     		glfwSwapBuffers(window); //swap buffers
     		glfwPollEvents(); //Poll for window events

@@ -20,7 +20,7 @@ public class MouseHandler extends GLFWCursorPosCallback {
 		Game game = new Game();
 		this.x = (float)xpos / (game.WIDTH / 2) - 1;
 		this.y = -((float)ypos / (game.HEIGHT / 2) - 1);
-		System.out.println(this.x + " " + this.y + " " + game.projectile.x + " " + game.mouseX);
+		//System.out.println(this.x + " " + this.y + " " + game.projectile.x + " " + game.mouseX);
 	}
 	
 	public float getMouseX() {
