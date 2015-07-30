@@ -3,20 +3,25 @@ package meltedchocolate.pongclone;
 import javax.swing.JFrame; //JFrame
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.*;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel{
 	//Variable Declaration
-	public static String title = "Pong Clone";
+	public String title = "Pong Clone";
 	int ballAmount = 1;
 	public boolean gamePaused = false;
 	Ball ball1 = new Ball(this, 0, 0, 1, 1);
 	Ball ball2 = new Ball(this, 100, 0, 1, 2);
 	Racket racket = new Racket(this);
-	public Game() {
+	Game() {
 		addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -86,8 +91,8 @@ public class Game extends JPanel{
 	public Object[] selection = {"1", "2"};
 	
 	public static void main(String[] args) throws InterruptedException {
-		JFrame frame = new JFrame(title);
 		Game game = new Game();
+		JFrame frame = new JFrame(game.title);
 		frame.add(game);
 		frame.setSize(500, 500);
 		frame.setVisible(true);

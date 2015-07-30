@@ -7,9 +7,8 @@ public class Ball {
 	private static final int DIAMETER = 20;
 	int x = 0;
 	int y = 0;
-	int speed = 2;
-	int vx = 0;
-	int vy = speed;
+	int vx;
+	int vy;
 	int hits = 0;
 	boolean lost = false;
 	boolean exists;
