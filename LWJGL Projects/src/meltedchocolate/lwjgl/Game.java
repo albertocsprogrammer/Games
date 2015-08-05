@@ -20,22 +20,16 @@ public class Game {
     public int WIDTH = 800;
 	public int HEIGHT = 800;
 	
-	MouseHandler mouseHandler = new MouseHandler();
-	
-	public double mouseX = mouseHandler.x;
-	public double mouseY = mouseHandler.y;
-	
-	Game() {
+	public Game() {
 		
 	}
     
     private long window;
-    public Block block = new Block(0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f);
-    public Block projectile = new Block(0.01f, 0.01f, mouseHandler.x, mouseHandler.y, 0.0f, 0.0f);
+    public Block block = new Block(0.1f, 0.1f, 0.0f, 0.0f);
+    public Block food = new Block(0.05f, 0.05f, 0.2f, 0.0f);
     
     public void run() {
     	try {
-    		Thread thread = new Thread(null, null, "Moving Block");
     		init();
     		loop();
     		
@@ -94,45 +88,64 @@ public class Game {
     		if (KeyboardHandler.isKeyDown(GLFW_KEY_ESCAPE))
     			glfwSetWindowShouldClose(window, GL_TRUE);
     		if (KeyboardHandler.isKeyDown(GLFW_KEY_UP))
-    			block.y = block.y + 0.008f;
+    			block.vy = block.vy + 0.001f;
     		if (KeyboardHandler.isKeyDown(GLFW_KEY_DOWN))
-    			block.y = block.y - 0.008f;
+    			block.vy = block.vy - 0.001f;
     		if (KeyboardHandler.isKeyDown(GLFW_KEY_RIGHT))
-    			block.x = block.x + 0.008f;
+    			block.vx = block.vx + 0.001f;
     		if (KeyboardHandler.isKeyDown(GLFW_KEY_LEFT))
-    			block.x = block.x - 0.008f;
+    			block.vx = block.vx - 0.001f;
     		
     		//Physics
     		
-    		if (block.x >= 1.0f - (block.width / 2))
-    			block.x = 1.0f - (block.width / 2) - 0.008f;
-    		else if (block.x <= -1.0f + (block.width / 2))
-    			block.x = -1.0f + (block.width / 2) + 0.008f;
-    		else if (block.y >= 1.0f - (block.height / 2))
-    			block.y = 1.0f - (block.height / 2) - 0.008f;
-    		else if (block.y <= -1.0f + (block.height / 2))
-    			block.y = -1.0f + (block.height / 2) + 0.008f;
+    		if (block.x >= 1.0f - (block.width / 2)) {
+    			block.x = 1.0f - (block.width / 2) - 0.001f;
+    			block.vx = 0;
+    		}
+    		else if (block.x <= -1.0f + (block.width / 2)) {
+    			block.x = -1.0f + (block.width / 2) + 0.001f;
+    			block.vx = 0;
+    		}
+    		else if (block.y >= 1.0f - (block.height / 2)) {
+    			block.y = 1.0f - (block.height / 2) - 0.001f;
+    			block.vy = 0;
+    		}
+    		else if (block.y <= -1.0f + (block.height / 2)) {
+    			block.y = -1.0f + (block.height / 2) + 0.001f;
+    			block.vy = 0;
+    		}
     		//TODO fix glitch where block slips into the corners
+    		block.updateBounds();
+    		food.updateBounds();
     		
-    		block.x = block.x + block.vx;
-    		block.y = block.y + block.vy;
+    		if(food.isColliding(block)) {
+    			block.width += 0.01f;
+    			block.height += 0.01f;
+    			if (Math.random() > 0.5) {
+    				food.x = (float)Math.random();
+    				food.y = (float)Math.random();
+    			} else {
+    				food.x = -(float)Math.random();
+    				food.y = -(float)Math.random();
+    			}
+    		}
     		
-    		projectile.x = this.mouseHandler.getMouseX();
-    		projectile.y = this.mouseHandler.getMouseY();
-    		//TODO make blue dot (projectile) move when mouse moves
-    		
-    		//System.out.println("Y: " + mouseHandler.y + " X: " + mouseHandler.x);
+    		block.x += block.vx;
+    		block.y += block.vy;
     		//Graphics
     		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear the framebuffer
+    		glColor3f(0.0f, 1.0f, 0.0f);
+    		food.draw();
     		glColor3f(1.0f, 0.0f, 0.0f);
     		block.draw(); //draw the block
-    		//glColor3f(0.0f, 0.0f, 1.0f); comment is to get rid of annoying dot until i fix it >:(
-    		//projectile.draw();
+    		//System.out.println(projectile.x + " " + projectile.y);
+
     		
     		glfwSwapBuffers(window); //swap buffers
     		glfwPollEvents(); //Poll for window events
     	}
     }
+    
     
     public static void main(String[] args) throws InterruptedException {
 		new Game().run();
