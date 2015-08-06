@@ -1,16 +1,18 @@
 package meltedchocolate.lwjgl;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.Sys;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
- 
+import java.awt.Font;
 import java.nio.ByteBuffer;
  
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
+import static org.lwjgl.stb.STBEasyFont.*;
 
 public class Game {
 	private GLFWErrorCallback errorCallback;
@@ -30,6 +32,7 @@ public class Game {
     
     public void run() {
     	try {
+
     		init();
     		loop();
     		
@@ -43,16 +46,16 @@ public class Game {
     }
     
     private void init() {
+   
     	//setup error callback
     	glfwSetErrorCallback(errorCallback = errorCallbackPrint(System.err));
     	
     	//initialize GLFW
-    	if (glfwInit() !=GL_TRUE)
+    	if (glfwInit() != GL_TRUE)
     		throw new IllegalStateException("Unable to Initialize GLFW");
     		
     	glfwWindowHint(GLFW_VISIBLE, GL_TRUE); //its not visible immediately
     	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-    	
     	
     	
     	window = glfwCreateWindow(WIDTH, HEIGHT, "Movable Block", NULL, NULL); //create the window
@@ -74,6 +77,8 @@ public class Game {
     		(GLFWvidmode.width(vidmode) - WIDTH) / 2,
     		(GLFWvidmode.height(vidmode) - HEIGHT) / 2
     	);
+    	
+
     	
     	glfwMakeContextCurrent(window); //Apply the above context
     	glfwSwapInterval(1); //Enable V-Sync
@@ -129,6 +134,14 @@ public class Game {
     				food.y = -(float)Math.random();
     			}
     		}
+    		if (block.vx > 0.00001f)
+    			block.vx -= 0.0005;
+    		if (block.vy > 0.00001f)
+    			block.vy -= 0.0005;
+    		if (block.vx < -0.00001f)
+    			block.vx += 0.0005;
+    		if (block.vy < -0.00001f)
+    			block.vy += 0.0005;
     		
     		block.x += block.vx;
     		block.y += block.vy;
@@ -138,10 +151,7 @@ public class Game {
     		food.draw();
     		glColor3f(1.0f, 0.0f, 0.0f);
     		block.draw(); //draw the block
-    		//System.out.println(projectile.x + " " + projectile.y);
-
-    		
-    		glfwSwapBuffers(window); //swap buffers
+       		glfwSwapBuffers(window); //swap buffers
     		glfwPollEvents(); //Poll for window events
     	}
     }
