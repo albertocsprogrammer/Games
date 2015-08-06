@@ -134,6 +134,7 @@ public class Game {
     				food.y = -(float)Math.random();
     			}
     		}
+    		
     		if (block.vx > 0.00001f)
     			block.vx -= 0.0005;
     		if (block.vy > 0.00001f)
